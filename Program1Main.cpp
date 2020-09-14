@@ -4,11 +4,16 @@
 using namespace std;
 
 
+//Returns a random integer between 1 and 6
+int RollDie(){
+	int roll = (rand() % 6) + 1;
+	return roll;
+}
+
+
 //Rolls the dice and returns the value of the roll
-int RollDice() {
+int AddDice(int firstRoll, int secondRoll) {
 	int roll = -1;
-	int firstRoll = rand() % 6;
-	int secondRoll = rand() % 6;
 	if (secondRoll > firstRoll) {
 		roll = (secondRoll * 10) + firstRoll;
 	}
@@ -24,6 +29,8 @@ bool promptUser() {
 	char userInput;
 	bool waitingForUser = true;
 	bool result;
+
+	cout << "Try again? y/n ";
 
 	//Loop runs while input is invalid
 	while (waitingForUser) {
@@ -53,32 +60,75 @@ int main() {
 	srand(0);
 	int userWins = 0;
 	int computerWins = 0;
-
+	int topNumber = 0;
 
 	//Main Game Loop
 	while (!exit) {
-		int userRoll;
-		userRoll = RollDice();
-		cout << "User rolls: " << userRoll << endl;
 
-		int computerRoll;
-		computerRoll = RollDice();
-		cout << "Computer rolls: " << computerRoll << endl;
+		//User Rolls
+		int userNumber;
+		int userRoll1 = RollDie();
+		int userRoll2 = RollDie();
 
-		//Checks if 
-		if (computerRoll > userRoll) {
-			computerWins++;
-			cout << "Computer Wins!";
+		cout << "Rolling 2 dice for human: " << endl;
+		userNumber = AddDice(userRoll1, userRoll2);
+		cout << "Rolled " << userRoll1 << " and " << userRoll2 << ", making " << userNumber << "." << endl;
+
+		//Setting top number
+		cout << endl;
+		if (topNumber < userNumber) {
+			topNumber = userNumber;
+			cout << topNumber << " is the number to beat!" << endl;
 		}
 		else {
-			userWins++;
-			cout << "User Wins!";
+			cout << "Too bad, the Computer Wins!";
+			computerWins++;
+			topNumber = 0;
+			//Outputs the total score
+			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
+			exit = !promptUser();
+			if (exit) {
+				break;
+			}
+			else {
+				continue;
+			}
 		}
+		
+		//Computer Rolls
+		int computerNumber;
+		int computerRoll1 = RollDie();
+		int computerRoll2 = RollDie();
+		
+		cout << "Rolling 2 dice for computer: " << endl;
+		computerNumber = AddDice(computerRoll1, computerRoll2);
+		cout << "Rolled " << computerRoll1 << " and " << computerRoll2 << ", making " << computerNumber << "." << endl;
 
-		//Outputs Score
-		cout << "The current score is - Human: " << userWins;
-		cout << ", Computer: " << computerWins;
-		cout << "Try again? y/n ";
-		exit = promptUser();
+		//Checks if either computer or user wins
+		if (topNumber > userNumber) {
+			computerWins++;
+			topNumber = 0;
+
+			cout << "Too bad, the Computer Wins!";
+			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
+			exit = !promptUser();
+			
+		}
+		else if (topNumber > computerNumber){
+			userWins++;
+			topNumber = 0;
+			
+			cout << "User Wins!";
+			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
+			exit = !promptUser();
+		}
+		else {
+			cout << endl;
+			if (topNumber < computerNumber) {
+				topNumber = computerNumber;
+			}
+			cout << topNumber << " is the number to beat!";
+		}
+		cout << endl;
 	}
 }
