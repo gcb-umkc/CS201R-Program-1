@@ -73,13 +73,13 @@ int main() {
 		cout << "Rolling 2 dice for human: " << endl;
 		cout << "Rolled " << userRoll1 << " and " << userRoll2 << ", making " << userNumber << "." << endl;
 
-		//Setting top number
+		//Setting top number to the user number if user number is greater
 		cout << endl;
 		if (topNumber < userNumber) {
 			topNumber = userNumber;
 			cout << topNumber << " is the number to beat!" << endl;
 		}
-		//On the second loop, if the userNumber is smaller, then the user loses
+		//If the user number is not greater, then the user loses
 		else {
 			computerWins++;
 			topNumber = 0;
@@ -101,14 +101,7 @@ int main() {
 		cout << "Rolling 2 dice for computer: " << endl;
 		cout << "Rolled " << computerRoll1 << " and " << computerRoll2 << ", making " << computerNumber << "." << endl;
 
-		//At the end of a round, checks if either computer or user wins
-		if (topNumber > userNumber) {
-			computerWins++;
-			topNumber = 0;
-			cout << "Too bad, the Computer Wins!" << endl;
-			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
-			exit = !promptUser();
-		}
+		//At the end of a round, checks if user has won
 		if (topNumber > computerNumber){
 			userWins++;
 			topNumber = 0;
@@ -117,8 +110,8 @@ int main() {
 			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
 			exit = !promptUser();
 		}
+		//If neither wins, the game continues on
 		else {
-			//If neither wins, the game continues on
 			if (topNumber < computerNumber) {
 				topNumber = computerNumber;
 			}
