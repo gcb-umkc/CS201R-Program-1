@@ -11,9 +11,10 @@ int RollDie(){
 }
 
 
-//Rolls the dice and returns the value of the roll
+//Finds the largest possible arrangement of rolls from two rolls
 int AddDice(int firstRoll, int secondRoll) {
 	int roll = -1;
+	//Checks for the highest roll, then puts it in the ten's place
 	if (secondRoll > firstRoll) {
 		roll = (secondRoll * 10) + firstRoll;
 	}
@@ -29,10 +30,9 @@ bool promptUser() {
 	char userInput;
 	bool waitingForUser = true;
 	bool result;
-
 	cout << "Try again? y/n ";
 
-	//Loop runs while input is invalid
+	//Loop runs while waiting or input is invalid
 	while (waitingForUser) {
 		cin >> userInput;
 		switch (userInput) {
@@ -54,23 +54,23 @@ bool promptUser() {
 	return result;
 }
 
+
 int main() {
-	bool exit = false;
+	//Initializing Variables
 	srand(time(NULL));
+	bool exit = false;
 	int userWins = 0;
 	int computerWins = 0;
 	int topNumber = 0;
 
-	//Main Game Loop
+	//Main Game Loop, runs while the exit condition is false
 	while (!exit) {
 
-		//User Rolls
-		int userNumber;
+		//Setting user rolls and number
 		int userRoll1 = RollDie();
 		int userRoll2 = RollDie();
-
+		int userNumber = AddDice(userRoll1, userRoll2);
 		cout << "Rolling 2 dice for human: " << endl;
-		userNumber = AddDice(userRoll1, userRoll2);
 		cout << "Rolled " << userRoll1 << " and " << userRoll2 << ", making " << userNumber << "." << endl;
 
 		//Setting top number
@@ -79,8 +79,8 @@ int main() {
 			topNumber = userNumber;
 			cout << topNumber << " is the number to beat!" << endl;
 		}
+		//On the second loop, if the userNumber is smaller, then the user loses
 		else {
-			//If its on the second loop if the userNumber is smaller, then it exits the loop
 			computerWins++;
 			topNumber = 0;
 			cout << "Too bad, the Computer Wins!" << endl;
@@ -94,40 +94,36 @@ int main() {
 			}
 		}
 		
-		//Computer Rolls
-		int computerNumber;
+		//Setting computer rolls and number
 		int computerRoll1 = RollDie();
 		int computerRoll2 = RollDie();
-		
+		int computerNumber = AddDice(computerRoll1, computerRoll2);
 		cout << "Rolling 2 dice for computer: " << endl;
-		computerNumber = AddDice(computerRoll1, computerRoll2);
 		cout << "Rolled " << computerRoll1 << " and " << computerRoll2 << ", making " << computerNumber << "." << endl;
 
-		//Checks if either computer or user wins
+		//At the end of a round, checks if either computer or user wins
 		if (topNumber > userNumber) {
 			computerWins++;
 			topNumber = 0;
-
 			cout << "Too bad, the Computer Wins!" << endl;
 			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
 			exit = !promptUser();
-			
 		}
-		else if (topNumber > computerNumber){
+		if (topNumber > computerNumber){
 			userWins++;
 			topNumber = 0;
-			
-			cout << "User Wins!";
+			cout << endl;
+			cout << "User Wins!" << endl;
 			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
 			exit = !promptUser();
 		}
 		else {
-			cout << endl;
+			//If neither wins, the game continues on
 			if (topNumber < computerNumber) {
 				topNumber = computerNumber;
 			}
-			cout << topNumber << " is the number to beat!";
+			cout << endl;
+			cout << topNumber << " is the number to beat!" << endl;
 		}
-		cout << endl;
 	}
 }
