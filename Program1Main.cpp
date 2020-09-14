@@ -63,7 +63,7 @@ int main() {
 	int computerWins = 0;
 	int topNumber = 0;
 
-	//Main Game Loop, runs while the exit condition is false
+	//Main Game Loop, runs while exit is false
 	while (!exit) {
 
 		//Setting user rolls and number
@@ -72,26 +72,28 @@ int main() {
 		int userNumber = AddDice(userRoll1, userRoll2);
 		cout << "Rolling 2 dice for human: " << endl;
 		cout << "Rolled " << userRoll1 << " and " << userRoll2 << ", making " << userNumber << "." << endl;
-
-		//Setting top number to the user number if user number is greater
 		cout << endl;
-		if (topNumber < userNumber) {
-			topNumber = userNumber;
-			cout << topNumber << " is the number to beat!" << endl;
-		}
-		//If the user number is not greater, then the user loses
-		else {
+
+		//Checks if user has lost, if not the game continues
+		if (topNumber >= userNumber) {
+			//Game end conditions
 			computerWins++;
-			topNumber = 0;
 			cout << "Too bad, the Computer Wins!" << endl;
 			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
 			exit = !promptUser();
+			topNumber = 0;
+
+			//Exits game if exit is true, else continues
 			if (exit) {
 				break;
 			}
 			else {
 				continue;
 			}
+		}
+		else {
+			topNumber = userNumber;
+			cout << topNumber << " is the number to beat!" << endl;
 		}
 		
 		//Setting computer rolls and number
@@ -100,22 +102,19 @@ int main() {
 		int computerNumber = AddDice(computerRoll1, computerRoll2);
 		cout << "Rolling 2 dice for computer: " << endl;
 		cout << "Rolled " << computerRoll1 << " and " << computerRoll2 << ", making " << computerNumber << "." << endl;
+		cout << endl;
 
-		//At the end of a round, checks if user has won
-		if (topNumber > computerNumber){
+		//Checks if computer has lost, if not the game continues
+		if (topNumber >= computerNumber) {
+			//Game end conditions
 			userWins++;
-			topNumber = 0;
-			cout << endl;
 			cout << "User Wins!" << endl;
 			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
 			exit = !promptUser();
+			topNumber = 0;
 		}
-		//If neither wins, the game continues on
 		else {
-			if (topNumber < computerNumber) {
-				topNumber = computerNumber;
-			}
-			cout << endl;
+			topNumber = computerNumber;
 			cout << topNumber << " is the number to beat!" << endl;
 		}
 	}
