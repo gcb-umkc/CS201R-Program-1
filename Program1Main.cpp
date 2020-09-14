@@ -73,7 +73,7 @@ int main() {
 		userNumber = AddDice(userRoll1, userRoll2);
 		cout << "Rolled " << userRoll1 << " and " << userRoll2 << ", making " << userNumber << "." << endl;
 
-		//Sets the top number
+		//Setting top number
 		cout << endl;
 		if (topNumber < userNumber) {
 			topNumber = userNumber;
@@ -88,6 +88,9 @@ int main() {
 			exit = !promptUser();
 			if (exit) {
 				break;
+			}
+			else {
+				continue;
 			}
 		}
 		
