@@ -56,8 +56,7 @@ bool promptUser() {
 
 int main() {
 	bool exit = false;
-	//srand(time(NULL));
-	srand(0);
+	srand(time(NULL));
 	int userWins = 0;
 	int computerWins = 0;
 	int topNumber = 0;
@@ -74,24 +73,21 @@ int main() {
 		userNumber = AddDice(userRoll1, userRoll2);
 		cout << "Rolled " << userRoll1 << " and " << userRoll2 << ", making " << userNumber << "." << endl;
 
-		//Setting top number
+		//Sets the top number
 		cout << endl;
 		if (topNumber < userNumber) {
 			topNumber = userNumber;
 			cout << topNumber << " is the number to beat!" << endl;
 		}
 		else {
-			cout << "Too bad, the Computer Wins!";
+			//If its on the second loop if the userNumber is smaller, then it exits the loop
 			computerWins++;
 			topNumber = 0;
-			//Outputs the total score
+			cout << "Too bad, the Computer Wins!" << endl;
 			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
 			exit = !promptUser();
 			if (exit) {
 				break;
-			}
-			else {
-				continue;
 			}
 		}
 		
@@ -109,7 +105,7 @@ int main() {
 			computerWins++;
 			topNumber = 0;
 
-			cout << "Too bad, the Computer Wins!";
+			cout << "Too bad, the Computer Wins!" << endl;
 			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
 			exit = !promptUser();
 			
