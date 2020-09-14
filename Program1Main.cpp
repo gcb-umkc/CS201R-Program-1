@@ -13,6 +13,8 @@ int RollDie(){
 
 //Finds the largest possible arrangement of rolls from two rolls
 int AddDice(int firstRoll, int secondRoll) {
+	//firstRoll and secondRoll should be between 1 and 6
+
 	int roll = -1;
 	//Checks for the highest roll, then puts it in the ten's place
 	if (secondRoll > firstRoll) {
@@ -21,11 +23,12 @@ int AddDice(int firstRoll, int secondRoll) {
 	else {
 		roll = (firstRoll * 10) + secondRoll;
 	}
+	//Returns a number between 11 and 66
 	return roll;
 }
 
 
-//Takes an y or n from the user, and outputs either true or false
+//Takes an y or n input from the user, and outputs boolean
 bool promptUser() {
 	char userInput;
 	bool waitingForUser = true;
@@ -51,6 +54,7 @@ bool promptUser() {
 			break;
 		}
 	}
+	//Should output either true or false
 	return result;
 }
 
@@ -76,19 +80,16 @@ int main() {
 
 		//Checks if user has lost, if not the game continues
 		if (topNumber >= userNumber) {
-			//Game end conditions
+			//Game end, adds wins, and prompts user whether they want to start again
 			computerWins++;
 			cout << "Too bad, the Computer Wins!" << endl;
 			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
 			exit = !promptUser();
 			topNumber = 0;
 
-			//Exits game if exit is true, else continues
+			//Exits main game loop if exit is true
 			if (exit) {
 				break;
-			}
-			else {
-				continue;
 			}
 		}
 		else {
@@ -106,7 +107,7 @@ int main() {
 
 		//Checks if computer has lost, if not the game continues
 		if (topNumber >= computerNumber) {
-			//Game end conditions
+			//Game end
 			userWins++;
 			cout << "User Wins!" << endl;
 			cout << "The current score is - Human: " << userWins << ", Computer: " << computerWins << endl;
